@@ -8,6 +8,7 @@ import lombok.Setter;
 import ru.liga.domain.entity.restaurantService.restaurant.Restaurant;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 
 
@@ -17,7 +18,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @Getter
 @Setter
-public class RestaurantCoordinate {
+public class RestaurantCoordinate implements Serializable {
 
     @Id
     @Column(name = "restaurant_id")

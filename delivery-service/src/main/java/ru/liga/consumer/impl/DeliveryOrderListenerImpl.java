@@ -45,15 +45,19 @@ public class DeliveryOrderListenerImpl implements DeliveryOrderListener, Distanc
             freeCouriers = courierService.getAllCourierByCourierStatus(CourierStatus.FREE.name());
             //Поиск ближайшего курьера
             long courId = 0;
-            double maxDis = 0;
+            double minDis = 0;
             for (Courier courier : freeCouriers) {
                 double resDis = getDistance(
                         courier.getCoordinate().getLatitude(),
                         courier.getCoordinate().getLongitude(),
                         order.getOrder().getCustomer().getCoordinate().getLatitude(),
                         order.getOrder().getCustomer().getCoordinate().getLongitude());
-                if (maxDis < resDis) {
-                    maxDis = resDis;
+                if (minDis == 0) {
+                    minDis = resDis;
+                    continue;
+                }
+                if (minDis > Math.abs(resDis)) {
+                    minDis = resDis;
                     courId = courier.getId();
                 }
             }

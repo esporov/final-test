@@ -7,6 +7,7 @@ import lombok.Setter;
 import ru.liga.domain.entity.deliveryService.coordinate.CourierCoordinate;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
@@ -15,7 +16,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @Getter
 @Setter
-public class Courier {
+public class Courier implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

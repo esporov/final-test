@@ -1,6 +1,7 @@
 package liga.service.impl;
 
 import liga.repository.OrderItemRepository;
+import liga.service.OrderItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

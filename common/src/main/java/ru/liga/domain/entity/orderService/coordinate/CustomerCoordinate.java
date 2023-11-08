@@ -10,6 +10,7 @@ import ru.liga.domain.entity.deliveryService.courier.Courier;
 import ru.liga.domain.entity.orderService.customer.Customer;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
@@ -18,7 +19,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @Getter
 @Setter
-public class CustomerCoordinate {
+public class CustomerCoordinate implements Serializable {
 
     @Id
     @Column(name = "customer_id")

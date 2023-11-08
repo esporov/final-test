@@ -3,6 +3,7 @@ package liga.service.impl;
 import liga.client.RestaurantFeign;
 import liga.repository.OrderRepository;
 import liga.service.CustomerService;
+import liga.service.OrderItemService;
 import liga.service.OrderService;
 import liga.service.RabbitMqProducerService;
 import lombok.RequiredArgsConstructor;
@@ -39,9 +40,9 @@ public class OrderServiceImpl implements OrderService, IllegalStatusExceptionMes
 
     private final OrderRepository orderRepository;
     private final CustomerService customerService;
-    private final OrderItemService orderItemService;
     private final RestaurantFeign restaurantFeign;
     private final RabbitMqProducerService rabbitMqProducerService;
+    private final OrderItemService orderItemService;
 
 
     @Override
