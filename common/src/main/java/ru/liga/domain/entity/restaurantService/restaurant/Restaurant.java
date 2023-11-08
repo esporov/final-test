@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import ru.liga.domain.entity.restaurantService.coordinate.RestaurantCoordinate;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -30,12 +31,17 @@ public class Restaurant {
     @Column(name = "work_status")
     private WorkStatus workStatus;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id")
+    private RestaurantCoordinate coordinate;
+
     @Override
     public String toString() {
         return "Restaurant{" +
                 "id=" + id +
                 ", address='" + address + '\'' +
                 ", workStatus=" + workStatus +
+                ", coordinate=" + coordinate +
                 '}';
     }
 
@@ -48,7 +54,8 @@ public class Restaurant {
 
         if (id != that.id) return false;
         if (!Objects.equals(address, that.address)) return false;
-        return workStatus == that.workStatus;
+        if (workStatus != that.workStatus) return false;
+        return Objects.equals(coordinate, that.coordinate);
     }
 
     @Override
@@ -56,6 +63,7 @@ public class Restaurant {
         int result = (int) (id ^ (id >>> 32));
         result = 31 * result + (address != null ? address.hashCode() : 0);
         result = 31 * result + (workStatus != null ? workStatus.hashCode() : 0);
+        result = 31 * result + (coordinate != null ? coordinate.hashCode() : 0);
         return result;
     }
 }

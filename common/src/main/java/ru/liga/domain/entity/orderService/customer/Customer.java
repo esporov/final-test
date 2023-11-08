@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import ru.liga.domain.entity.deliveryService.coordinate.CourierCoordinate;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -34,6 +35,10 @@ public class Customer {
     @Column(name = "create_date")
     private Date createDate;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id")
+    private CourierCoordinate coordinate;
+
     @Override
     public String toString() {
         return "Customer{" +
@@ -42,6 +47,7 @@ public class Customer {
                 ", email='" + email + '\'' +
                 ", address='" + address + '\'' +
                 ", createDate=" + createDate +
+                ", coordinate=" + coordinate +
                 '}';
     }
 
@@ -56,7 +62,8 @@ public class Customer {
         if (!Objects.equals(phone, customer.phone)) return false;
         if (!Objects.equals(email, customer.email)) return false;
         if (!Objects.equals(address, customer.address)) return false;
-        return Objects.equals(createDate, customer.createDate);
+        if (!Objects.equals(createDate, customer.createDate)) return false;
+        return Objects.equals(coordinate, customer.coordinate);
     }
 
     @Override
@@ -66,6 +73,7 @@ public class Customer {
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (address != null ? address.hashCode() : 0);
         result = 31 * result + (createDate != null ? createDate.hashCode() : 0);
+        result = 31 * result + (coordinate != null ? coordinate.hashCode() : 0);
         return result;
     }
 }

@@ -4,9 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import ru.liga.domain.entity.orderService.coordinate.CustomerCoordinate;
 
+import javax.persistence.OneToOne;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import java.util.Objects;
 
 @Getter
@@ -26,6 +29,7 @@ public class CustomerDto {
     private String address;
 
     @Override
+
     public String toString() {
         return "CustomerDto{" +
                 "phone='" + phone + '\'' +

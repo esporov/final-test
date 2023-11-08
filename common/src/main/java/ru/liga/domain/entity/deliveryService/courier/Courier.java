@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import ru.liga.domain.entity.deliveryService.coordinate.CourierCoordinate;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -28,12 +29,17 @@ public class Courier {
     @Column(name = "status")
     private CourierStatus courierStatus;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id")
+    private CourierCoordinate coordinate;
+
     @Override
     public String toString() {
         return "Courier{" +
                 "id=" + id +
                 ", phone='" + phone + '\'' +
                 ", courierStatus=" + courierStatus +
+                ", coordinate=" + coordinate +
                 '}';
     }
 
@@ -46,7 +52,8 @@ public class Courier {
 
         if (id != courier.id) return false;
         if (!Objects.equals(phone, courier.phone)) return false;
-        return courierStatus == courier.courierStatus;
+        if (courierStatus != courier.courierStatus) return false;
+        return Objects.equals(coordinate, courier.coordinate);
     }
 
     @Override
@@ -54,6 +61,7 @@ public class Courier {
         int result = (int) (id ^ (id >>> 32));
         result = 31 * result + (phone != null ? phone.hashCode() : 0);
         result = 31 * result + (courierStatus != null ? courierStatus.hashCode() : 0);
+        result = 31 * result + (coordinate != null ? coordinate.hashCode() : 0);
         return result;
     }
 }

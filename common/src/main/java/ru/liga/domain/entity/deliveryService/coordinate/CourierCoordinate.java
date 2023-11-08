@@ -1,6 +1,7 @@
 package ru.liga.domain.entity.deliveryService.coordinate;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,7 +12,7 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "courier_coordinates")
+@Table(name = "courier_coordinate")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -28,17 +29,18 @@ public class CourierCoordinate {
     @Column(name = "longitude")
     private float longitude;
 
-    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @OneToOne
     @MapsId
+    @JoinColumn(name = "courier_id")
+    @JsonIgnore
     private Courier courier;
 
     @Override
     public String toString() {
-        return "Coordinate{" +
+        return "CourierCoordinate{" +
                 "courierId=" + courierId +
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +
-                ", courier=" + courier +
                 '}';
     }
 
@@ -51,8 +53,7 @@ public class CourierCoordinate {
 
         if (courierId != that.courierId) return false;
         if (Float.compare(that.latitude, latitude) != 0) return false;
-        if (Float.compare(that.longitude, longitude) != 0) return false;
-        return Objects.equals(courier, that.courier);
+        return Float.compare(that.longitude, longitude) == 0;
     }
 
     @Override
@@ -60,7 +61,6 @@ public class CourierCoordinate {
         int result = (int) (courierId ^ (courierId >>> 32));
         result = 31 * result + (latitude != +0.0f ? Float.floatToIntBits(latitude) : 0);
         result = 31 * result + (longitude != +0.0f ? Float.floatToIntBits(longitude) : 0);
-        result = 31 * result + (courier != null ? courier.hashCode() : 0);
         return result;
     }
 }

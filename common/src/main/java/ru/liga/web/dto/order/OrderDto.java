@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ru.liga.domain.entity.deliveryService.courier.Courier;
+import ru.liga.domain.entity.orderService.customer.Customer;
 import ru.liga.domain.entity.orderService.order.DeliveryStatus;
 import ru.liga.domain.entity.orderService.order.KitchenStatus;
 
@@ -26,7 +27,9 @@ public class OrderDto implements Serializable {
 
     private BigDecimal price;
 
-    private long courierId;
+    private Courier courier;
+
+    private Customer customer;
 
     @Override
     public String toString() {
@@ -35,15 +38,34 @@ public class OrderDto implements Serializable {
                 ", kitchenStatus=" + kitchenStatus +
                 ", deliveryStatus=" + deliveryStatus +
                 ", price=" + price +
-                ", courierId=" + courierId +
+                ", courier=" + courier +
+                ", customer=" + customer +
                 '}';
     }
 
-    public long getRestaurantId() {
-        return restaurantId;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        OrderDto orderDto = (OrderDto) o;
+
+        if (restaurantId != orderDto.restaurantId) return false;
+        if (kitchenStatus != orderDto.kitchenStatus) return false;
+        if (deliveryStatus != orderDto.deliveryStatus) return false;
+        if (!Objects.equals(price, orderDto.price)) return false;
+        if (!Objects.equals(courier, orderDto.courier)) return false;
+        return Objects.equals(customer, orderDto.customer);
     }
 
-    public void setRestaurantId(long restaurantId) {
-        this.restaurantId = restaurantId;
+    @Override
+    public int hashCode() {
+        int result = (int) (restaurantId ^ (restaurantId >>> 32));
+        result = 31 * result + (kitchenStatus != null ? kitchenStatus.hashCode() : 0);
+        result = 31 * result + (deliveryStatus != null ? deliveryStatus.hashCode() : 0);
+        result = 31 * result + (price != null ? price.hashCode() : 0);
+        result = 31 * result + (courier != null ? courier.hashCode() : 0);
+        result = 31 * result + (customer != null ? customer.hashCode() : 0);
+        return result;
     }
 }

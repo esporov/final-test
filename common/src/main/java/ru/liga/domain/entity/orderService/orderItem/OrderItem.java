@@ -24,11 +24,11 @@ public class OrderItem implements Serializable {
     private long id;
 
     @ManyToOne
-    @JoinColumn(name = "order_id")
+    @JoinColumn
     private Order order;
 
     @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "item_id")
+    @JoinColumn
     private Item item;
 
     @Column(name = "price")
