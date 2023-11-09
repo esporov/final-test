@@ -1,0 +1,23 @@
+server:
+  port: 9000
+  forward-headers-strategy: framework
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/liga-db?currentSchema=auth
+    username: postgres
+    password: 411712
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: false
+    properties:
+      hibernate:
+        show_sql: true
+  jackson:
+    deserialization:
+      FAIL_ON_IGNORED_PROPERTIES: false
+    serialization:
+      INDENT_OUTPUT: false
+      WRITE_DATES_AS_TIMESTAMPS: false
+      WRITE_BIGDECIMAL_AS_PLAIN: true

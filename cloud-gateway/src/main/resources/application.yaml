@@ -1,0 +1,58 @@
+server:
+  port: 8085
+  forward-headers-strategy: framework
+
+springdoc:
+  swagger-ui:
+    path: /
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: delivery-service
+          uri: http://127.0.0.1:8080/
+          predicates:
+            - Path=/delivery-api/**
+          filters:
+            - TokenRelay=
+            - RemoveRequestHeader=Cookie
+
+        - id: kitchen-service
+          uri: http://127.0.0.1:8081/
+          predicates:
+            - Path=/restaurant-api/**
+          filters:
+            - TokenRelay=
+            - RemoveRequestHeader=Cookie
+
+        - id: notification-service
+          uri: http://127.0.0.1:8082/
+          predicates:
+            - Path=/notification-service/**
+          filters:
+            - TokenRelay=
+            - RemoveRequestHeader=Cookie
+
+        - id: order-service
+          uri: http://127.0.0.1:8083/
+          predicates:
+            - Path=/order-service/**
+          filters:
+            - TokenRelay=
+            - RemoveRequestHeader=Cookie
+
+  security:
+    oauth2:
+      client:
+        registration:
+          gateway:
+            provider: spring
+            client-id: gateway
+            client-secret: secret
+            authorization-grant-type: authorization_code
+            redirect-uri: "http://127.0.0.1:8085/login/oauth2/code/{registrationId}"
+            scope: openid
+        provider:
+          spring:
+            issuer-uri: http://localhost:9000

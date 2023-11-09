@@ -23,5 +23,7 @@
         <module>notification-service</module>
         <module>migration</module>
         <module>order-service</module>
+        <module>auth-service</module>
+        <module>cloud-gateway</module>
     </modules>
 </project>
