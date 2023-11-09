@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import ru.liga.domain.entity.restaurantService.item.Item;
 
 @Component
-@FeignClient(name = "kitchen-service", url = "http://localhost:8081/restaurant-api")
+@FeignClient(name = "restaurant-service", url = "http://localhost:8081/restaurant-service")
 public interface RestaurantFeign {
 
     @GetMapping("/v1.0/item-feign/id/{id}")

@@ -25,7 +25,7 @@ import java.util.List;
 
 @Tag(name = "Item Controller")
 @RestController
-@RequestMapping("/restaurant-api")
+@RequestMapping("/restaurant-service")
 @RequiredArgsConstructor
 @Slf4j
 public class ItemController {

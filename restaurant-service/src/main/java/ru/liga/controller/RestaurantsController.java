@@ -23,7 +23,7 @@ import ru.liga.web.mapper.order.OrderMapper;
 
 @Tag(name = "Restaurant Controller")
 @RestController
-@RequestMapping("/restaurant-api")
+@RequestMapping("/restaurant-service")
 @RequiredArgsConstructor
 @Validated
 public class RestaurantsController {
