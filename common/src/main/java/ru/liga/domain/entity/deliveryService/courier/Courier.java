@@ -23,7 +23,7 @@ public class Courier implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "couriers_seq")
-    @SequenceGenerator(name = "couriers_seq", sequenceName = "couriers_seq", allocationSize = 20)
+    @SequenceGenerator(name = "couriers_seq", sequenceName = "couriers_seq", allocationSize = 1)
     @Column(name = "id")
     @Schema(description = "Идентификатор", example = "1")
     private long id;

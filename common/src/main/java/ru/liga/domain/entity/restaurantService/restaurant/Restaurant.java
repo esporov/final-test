@@ -22,7 +22,7 @@ public class Restaurant implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "restaurants_seq")
-    @SequenceGenerator(name = "restaurants_seq", sequenceName = "restaurants_seq", allocationSize = 20)
+    @SequenceGenerator(name = "restaurants_seq", sequenceName = "restaurants_seq", allocationSize = 1)
     @Column(name = "id")
     private long id;
 

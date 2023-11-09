@@ -20,7 +20,7 @@ public class OrderItem implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order_items_seq")
-    @SequenceGenerator(name = "order_items_seq", sequenceName = "order_items_seq", allocationSize = 20)
+    @SequenceGenerator(name = "order_items_seq", sequenceName = "order_items_seq", allocationSize = 1)
     @Column(name = "id")
     private long id;
 
