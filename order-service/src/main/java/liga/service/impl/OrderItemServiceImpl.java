@@ -24,15 +24,6 @@ public class OrderItemServiceImpl implements OrderItemService {
                         "Позиция заказа по id = " + orderItemId + " не найдена."));
     }
 
-    /*@Override
-    public List<OrderItem> getAllOrderItemByOrderId(long orderId) {
-        orderService.getOrderByOrderId(orderId);
-        var orderList = orderItemRepository.getAllOrderItemByOrderId(orderId);
-        if (orderList.size() == 0) {
-            throw new OrderItemNotFoundException("Список заказа пуст");
-        }
-        return orderList;
-    }*/
 
     @Transactional
     @Override

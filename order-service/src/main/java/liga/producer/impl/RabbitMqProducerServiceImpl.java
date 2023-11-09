@@ -1,8 +1,6 @@
-package liga.service.impl;
+package liga.producer.impl;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import liga.service.RabbitMqProducerService;
+import liga.producer.RabbitMqProducerService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +21,7 @@ public class RabbitMqProducerServiceImpl implements RabbitMqProducerService {
     private final RabbitTemplate rabbitTemplate;
 
     @Override
-    public void sendMessage(OrderWrapper<Order, OrderItem> order, String routingKey) {
+    public void sendOrderToCourier(OrderWrapper<Order, OrderItem> order, String routingKey) {
         String str = String.format("Заказ отправлен в очередь для курьеров. ->%s", order);
         rabbitTemplate.convertAndSend("KitchenDeliveryExchange", routingKey, order);
         LOGGER.info(str);

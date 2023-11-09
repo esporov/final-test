@@ -14,21 +14,9 @@ public interface OrderService {
 
     Order getOrderByOrderId(String orderId);
 
-     Order updateKitchenStatus(String id, String status);
+    Order updateKitchenStatus(String id, String status);
 
-     Order updateDeliveryStatus(String id, String status);
+    Order updateDeliveryStatus(String id, String status);
 
     Order updateOrderByCourier(String orderId, Courier courier);
-
-//    Order updateOrderKitchenStatusByOrderId(long id, Order order);
-//
-//    Order updateOrderDeliveryStatusByOrderId(long id, Order order);
-
-//    List<Order> getOrdersByCustomerId(long customerId);
-
-//    List<Order> getOrdersByCourierId(long courierId);
-//
-//    List<Order> getOrdersByRestaurantId(long restaurantId);
-
-
 }

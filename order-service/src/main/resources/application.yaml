@@ -23,10 +23,10 @@ logging:
 
 springdoc:
   swagger-ui:
-    path: /restaurant-api/swagger-ui.html
+    path: /order-service/swagger-ui.html
     default-model-expand-depth: -1
   api-docs:
-    path: /restaurant-api/v3/api-docs
+    path: /order-service/v3/api-docs
   override-with-generic-response: false
 
 spring:
@@ -42,8 +42,8 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         show_sql: true
         default_batch_fetch_size: 50
-#  security:
-#    oauth2:
-#      resourceserver:
-#        jwt:
-#          issuer-uri: http://localhost:9000
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9000

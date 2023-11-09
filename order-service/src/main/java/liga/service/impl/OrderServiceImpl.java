@@ -5,12 +5,11 @@ import liga.repository.OrderRepository;
 import liga.service.CustomerService;
 import liga.service.OrderItemService;
 import liga.service.OrderService;
-import liga.service.RabbitMqProducerService;
+import liga.producer.RabbitMqProducerService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-
 import org.springframework.transaction.annotation.Transactional;
 import ru.liga.domain.entity.deliveryService.courier.Courier;
 import ru.liga.domain.entity.orderService.order.DeliveryStatus;
@@ -19,8 +18,8 @@ import ru.liga.domain.entity.orderService.order.Order;
 import ru.liga.domain.entity.orderService.orderItem.OrderItem;
 import ru.liga.domain.entity.restaurantService.item.Item;
 import ru.liga.domain.exception.IllegalStatusException;
+import ru.liga.domain.exception.IllegalUuidException;
 import ru.liga.domain.exception.OrderNotFoundException;
-
 import ru.liga.util.IllegalStatusExceptionMessage;
 import ru.liga.util.OrderWrapper;
 
@@ -47,39 +46,48 @@ public class OrderServiceImpl implements OrderService, IllegalStatusExceptionMes
 
     @Override
     public Order getOrderByOrderId(String orderId) {
-        var uuid = UUID.fromString(orderId);
-        LOGGER.info("Поиск заказа по id = {}.",orderId);
+        UUID uuid = null;
+        try {
+            uuid = UUID.fromString(orderId);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalUuidException("Неверно указан UUID");
+        }
+        LOGGER.info("Поиск заказа по id = {}.", orderId);
         return orderRepository.findById(uuid)
                 .orElseThrow(() -> new OrderNotFoundException(
                         "Заказ по id = " + orderId + " не найден."));
     }
 
+    @Transactional
     public Order updateKitchenStatus(String id, String status) {
         var order = getOrderByOrderId(id);
         try {
-            var validStatus = KitchenStatus.valueOf(status);
-            order.setKitchenStatus(validStatus);
-            LOGGER.info("Обновляем Kitchen статус заказа по id = {}, на статус = {}.",id, validStatus);
+            var newStatus = KitchenStatus.valueOf(status);
+            order.setKitchenStatus(newStatus);
+            LOGGER.info("Обновляем Kitchen статус заказа по id = {}, на статус = {}.", id, order.getKitchenStatus());
             return orderRepository.save(order);
         } catch (IllegalArgumentException e) {
             throw new IllegalStatusException(exceptionMessage(KitchenStatus.class), e);
         }
     }
 
+    @Transactional
     public Order updateDeliveryStatus(String id, String status) {
         var order = getOrderByOrderId(id);
         try {
-            var validStatus = DeliveryStatus.valueOf(status);
-            order.setDeliveryStatus(validStatus);
-            LOGGER.info("Обновляем Delivery статус заказа по id = {}, на статус = {}.",id, validStatus);
+            var newStatus = DeliveryStatus.valueOf(status);
+            order.setDeliveryStatus(newStatus);
+            LOGGER.info("Обновляем Delivery статус заказа по id = {}, на статус = {}.", id, order.getDeliveryStatus());
             return orderRepository.save(order);
         } catch (IllegalArgumentException e) {
             throw new IllegalStatusException(exceptionMessage(DeliveryStatus.class), e);
         }
     }
 
+    @Transactional
     @Override
     public Order updateOrderByCourier(String orderId, Courier courier) {
+        LOGGER.info("Устанавливаем курьеру с id = {}, заказ с id = {}.", courier.getId(), orderId);
         var order = getOrderByOrderId(orderId);
         order.setCourier(courier);
         return orderRepository.save(order);
@@ -87,10 +95,10 @@ public class OrderServiceImpl implements OrderService, IllegalStatusExceptionMes
 
     @Transactional
     @Override
-    public OrderWrapper<Order,OrderItem>  createOrderByCustomerIdAndRestaurantId(
+    public OrderWrapper<Order, OrderItem> createOrderByCustomerIdAndRestaurantId(
             long customerId, long restaurantId, List<OrderItem> items) {
 
-        LOGGER.info("Поиск клиента по id = {}.",customerId);
+        LOGGER.info("Поиск клиента по id = {}.", customerId);
         var customer = customerService.getCustomerById(customerId);
 
         //Преобразование OrderItem
@@ -131,11 +139,11 @@ public class OrderServiceImpl implements OrderService, IllegalStatusExceptionMes
         newItems = orderItemService.createOrderItems(newItems);
 
         //Обертка
-        OrderWrapper<Order,OrderItem> fullOrder = new OrderWrapper<>();
+        OrderWrapper<Order, OrderItem> fullOrder = new OrderWrapper<>();
         fullOrder.setOrder(order);
         fullOrder.setItems(newItems);
 
-        rabbitMqProducerService.sendMessage(fullOrder, "delivery");
+        rabbitMqProducerService.sendOrderToCourier(fullOrder, "delivery");
 
         return fullOrder;
     }
