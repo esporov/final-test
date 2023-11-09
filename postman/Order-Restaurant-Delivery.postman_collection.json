@@ -1,0 +1,362 @@
+{
+	"info": {
+		"_postman_id": "2ed150ae-c5fb-43c2-be24-cf6c4ed9b534",
+		"name": "Order-Restaurant-Delivery",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27058736",
+		"_collection_link": "https://orange-capsule-46813.postman.co/workspace/New-Team-Workspace~7d424d76-27d2-49d4-be35-cc6af0383df2/collection/27058736-2ed150ae-c5fb-43c2-be24-cf6c4ed9b534?action=share&source=collection_link&creator=27058736"
+	},
+	"item": [
+		{
+			"name": "Order",
+			"item": [
+				{
+					"name": "Создать заказ",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"itemId\": 1,\r\n        \"quantity\":2\r\n    },\r\n    {\r\n        \"itemId\": 2,\r\n        \"quantity\":2\r\n    },\r\n    {\r\n        \"itemId\": 3,\r\n        \"quantity\":3\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8083/order-service/order-api/v1.0/order?customerId=1&restaurantId=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"order-service",
+								"order-api",
+								"v1.0",
+								"order"
+							],
+							"query": [
+								{
+									"key": "customerId",
+									"value": "1"
+								},
+								{
+									"key": "restaurantId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Получить заказ по UUID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8083/order-service/order-api/v1.0/order/id/feb8f606-cc02-4049-9c41-578319ea5a71",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"order-service",
+								"order-api",
+								"v1.0",
+								"order",
+								"id",
+								"feb8f606-cc02-4049-9c41-578319ea5a71"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Обновить статус заказа по ресторану",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8083/order-service/order-api/v1.0/order/id/feb8f606-cc02-4049-9c41-578319ea5a71/kitchen-status/DONE",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"order-service",
+								"order-api",
+								"v1.0",
+								"order",
+								"id",
+								"feb8f606-cc02-4049-9c41-578319ea5a71",
+								"kitchen-status",
+								"DONE"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Обновить статус заказа по доставке",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8083/order-service/order-api/v1.0/order/id/feb8f606-cc02-4049-9c41-578319ea5a71/delivery-status/PICKED_UP_THE_ORDER",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"order-service",
+								"order-api",
+								"v1.0",
+								"order",
+								"id",
+								"feb8f606-cc02-4049-9c41-578319ea5a71",
+								"delivery-status",
+								"PICKED_UP_THE_ORDER"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Установить курьера для заказа",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\" : 2,\r\n    \"phone\" : \"+78807864354\",\r\n    \"status\" : \"ON_ORDER\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8083/order-service/order-api/v1.0/order/id/feb8f606-cc02-4049-9c41-578319ea5a71/courier",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"order-service",
+								"order-api",
+								"v1.0",
+								"order",
+								"id",
+								"feb8f606-cc02-4049-9c41-578319ea5a71",
+								"courier"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Delivery",
+			"item": [
+				{
+					"name": "Получить курьера по id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/delivery-service/v1.0/courier/id/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"delivery-service",
+								"v1.0",
+								"courier",
+								"id",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Получить список курьеров по статусу",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/delivery-service/v1.0/couriers/status/FREE",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"delivery-service",
+								"v1.0",
+								"couriers",
+								"status",
+								"FREE"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Обновить статус курьера",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/delivery-service/v1.0/courier/1/status/FREE",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"delivery-service",
+								"v1.0",
+								"courier",
+								"1",
+								"status",
+								"FREE"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Restaurant",
+			"item": [
+				{
+					"name": "Обновление статуса по кухне на ACCEPTED",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/restaurant-service/v1.0/restaurant/8d848ee4-348c-4a34-ad0e-87dea8ee9b73/accept",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"restaurant-service",
+								"v1.0",
+								"restaurant",
+								"8d848ee4-348c-4a34-ad0e-87dea8ee9b73",
+								"accept"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Обновление статуса по кухне на DENIED",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/restaurant-service/v1.0/restaurant/8d848ee4-348c-4a34-ad0e-87dea8ee9b73/decline",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"restaurant-service",
+								"v1.0",
+								"restaurant",
+								"8d848ee4-348c-4a34-ad0e-87dea8ee9b73",
+								"decline"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Обновление статуса по кухне на IN_WORK",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/restaurant-service/v1.0/restaurant/8d848ee4-348c-4a34-ad0e-87dea8ee9b73/working",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"restaurant-service",
+								"v1.0",
+								"restaurant",
+								"8d848ee4-348c-4a34-ad0e-87dea8ee9b73",
+								"working"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Обновление статуса по кухне на DONE",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/restaurant-service/v1.0/restaurant/8d848ee4-348c-4a34-ad0e-87dea8ee9b73/done",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"restaurant-service",
+								"v1.0",
+								"restaurant",
+								"8d848ee4-348c-4a34-ad0e-87dea8ee9b73",
+								"done"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Поиск блюда по id.",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/restaurant-service/v1.0/item-feign/id/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"restaurant-service",
+								"v1.0",
+								"item-feign",
+								"id",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
