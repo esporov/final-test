@@ -27,7 +27,7 @@ public class RestaurantOrderListenerImpl implements RestaurantOrderListener {
 
     @RabbitListener(queues = "kitchen")
     public void receiveOrder(OrderWrapper<Order, OrderItem> order) {
-        orderFeign.updateKitchenStatus(order.getOrder().getId().toString(), KitchenStatus.IN_WORK.name());
-        LOGGER.info("Заказ принят, меняем статус на IN_WORK");
+        var updatedOrder = orderFeign.updateKitchenStatus(order.getOrder().getId().toString(), KitchenStatus.IN_WORK.name());
+        LOGGER.info("Заказ принят, меняем статус на {}", updatedOrder.getKitchenStatus().name());
     }
 }
