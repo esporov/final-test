@@ -32,3 +32,5 @@ Lombok, RabbitMQ, Swagger, Slf4j, JUnit, Mockito
 - docker run -t  --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3-management
 3. Вероятно придется поменять в application.yaml у модулей настройки БД (логин, пароль)
 
+### Примечания:
+Не получилось обработать ситуацию, когда нет свободных курьеров.
