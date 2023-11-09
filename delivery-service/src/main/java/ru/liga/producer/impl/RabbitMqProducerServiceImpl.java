@@ -22,9 +22,8 @@ public class RabbitMqProducerServiceImpl implements RabbitMqProducerService {
 
     @Override
     public void sendOrderToRestaurant(OrderWrapper<Order, OrderItem> order, String routingKey) {
-        String str = String.format("Заказ отправлен в очередь для курьеров. ->%s", order);
         rabbitTemplate.convertAndSend("KitchenDeliveryExchange", routingKey, order);
-        LOGGER.info(str);
+        LOGGER.info("Заказ отправлен в очередь для курьеров. -> {}", order);
     }
 
 }

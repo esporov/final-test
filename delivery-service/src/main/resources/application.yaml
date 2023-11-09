@@ -20,10 +20,10 @@ logging:
 
 springdoc:
   swagger-ui:
-    path: /delivery-api/swagger-ui.html
+    path: /delivery-service/swagger-ui.html
     default-model-expand-depth: -1
   api-docs:
-    path: /delivery-api/v3/api-docs
+    path: /delivery-service/v3/api-docs
   override-with-generic-response: false
 
 spring:
