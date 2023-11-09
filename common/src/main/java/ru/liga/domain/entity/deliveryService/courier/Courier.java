@@ -1,5 +1,7 @@
 package ru.liga.domain.entity.deliveryService.courier;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,6 +12,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
+@Schema(title = "Courier", description = "Курьер")
 @Entity
 @Table(name = "couriers")
 @NoArgsConstructor
@@ -19,15 +22,19 @@ import java.util.Objects;
 public class Courier implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "couriers_seq")
+    @SequenceGenerator(name = "couriers_seq", sequenceName = "couriers_seq", allocationSize = 20)
     @Column(name = "id")
+    @Schema(description = "Идентификатор", example = "1")
     private long id;
 
     @Column(name = "phone")
+    @Schema(description = "Номер телефона", example = "+78805535354")
     private String phone;
 
     @Enumerated(value = EnumType.STRING)
     @Column(name = "status")
+    @Schema(description = "Статус курьера", example = "ON_ORDER")
     private CourierStatus courierStatus;
 
     @OneToOne(cascade = CascadeType.ALL)

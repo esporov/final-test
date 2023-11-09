@@ -20,7 +20,8 @@ import java.util.Objects;
 public class Item implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "menu_items_seq")
+    @SequenceGenerator(name = "menu_items_seq", sequenceName = "menu_items_seq", allocationSize = 20)
     @Column(name = "id")
     private long id;
 

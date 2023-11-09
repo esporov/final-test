@@ -19,7 +19,8 @@ import java.util.Objects;
 public class OrderItem implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order_items_seq")
+    @SequenceGenerator(name = "order_items_seq", sequenceName = "order_items_seq", allocationSize = 20)
     @Column(name = "id")
     private long id;
 

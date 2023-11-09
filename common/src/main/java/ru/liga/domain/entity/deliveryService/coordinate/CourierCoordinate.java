@@ -2,6 +2,7 @@ package ru.liga.domain.entity.deliveryService.coordinate;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,6 +13,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
+@Schema(title = "Courier coordinate", description = "Координаты")
 @Entity
 @Table(name = "courier_coordinate")
 @NoArgsConstructor
@@ -22,12 +24,15 @@ public class CourierCoordinate implements Serializable {
 
     @Id
     @Column(name = "courier_id")
+    @Schema(description = "Идентификатор курьера", example = "1")
     private long courierId;
 
     @Column(name = "latitude")
+    @Schema(description = "Широта", example = "56.325236")
     private float latitude;
 
     @Column(name = "longitude")
+    @Schema(description = "Долгота", example = "44.011908")
     private float longitude;
 
     @OneToOne
